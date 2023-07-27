@@ -1,20 +1,25 @@
-function MovieCard({ movie }) {
+import React from "react";
+
+const MovieCard = ({ movie: { imdbID, Year, Poster, Title, Type } }) => {
   return (
-    <div className="movie-card">
-      <img
-        src={
-          movie.Poster === "N/A"
-            ? "https://placehold.co/300x400?text=Movie+Poster+Not+Available"
-            : movie.Poster
-        }
-      />
-      <div className="movie-info">
-        <p className="movie-year">{movie.Year}</p>
-        <p className="movie-type">{movie.Type}</p>
-        <p className="movie-title">{movie.Title}</p>
+    <div className="movie" key={imdbID}>
+      <div>
+        <p>{Year}</p>
+      </div>
+
+      <div>
+        <img
+          src={Poster !== "N/A" ? Poster : "https://via.placeholder.com/400"}
+          alt={Title}
+        />
+      </div>
+
+      <div>
+        <span>{Type}</span>
+        <h3>{Title}</h3>
       </div>
     </div>
   );
-}
+};
 
 export default MovieCard;

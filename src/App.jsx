@@ -1,42 +1,49 @@
-import { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
+
 import MovieCard from "./components/MovieCard";
+import "./index.css";
 import Search from "./components/Search";
 
-function App() {
+const API_URL = "http://www.omdbapi.com?apikey=b6003d8a";
+
+const App = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [movies, setMovies] = useState([]);
 
-  const apiUrl = "http://www.omdbapi.com/?apikey=f9b28153";
+  useEffect(() => {
+    searchMovies("Batman");
+  }, []);
 
-  async function searchMovies(title) {
-    const response = await fetch(`${apiUrl}&s=${title}`);
+  const searchMovies = async (title) => {
+    const response = await fetch(`${API_URL}&s=${title}`);
     const data = await response.json();
 
     setMovies(data.Search);
-    setSearchTerm("");
-  }
-
-  useEffect(() => {
-    searchMovies("avengers");
-  }, []);
+  };
 
   return (
     <div className="app">
-      <h1>Movie DB</h1>
+      <h1>Movies DB</h1>
 
       <Search
+        searchMovies={searchMovies}
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
-        searchMovies={searchMovies}
       />
 
-      <div className="movies-container">
-        {movies.map((movie) => {
-          return <MovieCard movie={movie} />;
-        })}
-      </div>
+      {movies?.length > 0 ? (
+        <div className="container">
+          {movies.map((movie) => (
+            <MovieCard movie={movie} />
+          ))}
+        </div>
+      ) : (
+        <div className="empty">
+          <h2>No movies found</h2>
+        </div>
+      )}
     </div>
   );
-}
+};
 
 export default App;

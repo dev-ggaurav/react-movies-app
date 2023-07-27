@@ -2,12 +2,13 @@ function Search({ setSearchTerm, searchMovies, searchTerm }) {
   return (
     <div className="search">
       <input
-        type="text"
-        onChange={(e) => setSearchTerm(e.target.value)}
-        placeholder="Search for Movies"
         value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        placeholder="Search for movies"
       />
-      <button onClick={() => searchMovies(searchTerm)}>Search</button>
+      <button alt="search" onClick={() => searchMovies(searchTerm)}>
+        Search
+      </button>
     </div>
   );
 }
